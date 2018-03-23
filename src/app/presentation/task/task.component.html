@@ -1,0 +1,12 @@
+<div *ngIf="!hasTask()" class="undefined task" [style.width.px]="width()" [style.height.px]="height()"
+                                               [style.top.px]="getTop()" [style.left.px]="getLeft()">
+
+</div>
+
+<div *ngIf="hasTask()" class="task" [style.width.px]="width()" [style.height.px]="height()"
+                                             [style.top.px]="getTop()" [style.left.px]="getLeft()">
+  <div class="">{{row}} : {{column}}</div>
+  <div class="id right">{{task.id}}</div>
+  <div class="summary">{{task.summary}}</div>
+  <div class="estimating right">{{task.actualDuration}}/{{task.expectedDuration}}</div>
+</div>

@@ -1,0 +1,34 @@
+div.task {
+  position: absolute;
+  background-color: orange;
+}
+
+div.undefined {
+  position: absolute;
+  background-color: red;
+  visibility: hidden;
+}
+
+div.summary {
+  position: absolute;
+  width: 90%;
+  height: 40%;
+  top: 10%;
+  left: 5%;
+  text-align: center;
+}
+
+div.right {
+  text-align: right;
+  position: absolute;
+  right: 1%;
+}
+
+div.id {
+}
+
+div.estimating {
+  position: absolute;
+  right: 1%;
+  bottom: 1%;
+}

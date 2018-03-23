@@ -1,0 +1,26 @@
+div.worker {
+  #background-color: green;
+  position: relative;
+}
+
+div.task {
+  position: absolute;
+}
+
+div.name {
+  position: absolute;
+  right: 1%;
+}
+
+div.tasks {
+  position: absolute;
+  top: 1em;
+}
+
+div.horLine {
+  position: absolute;
+  top: 0px;
+  height: 2px;
+  left: 0px;
+  right: 0px;
+}
