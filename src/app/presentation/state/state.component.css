@@ -8,6 +8,7 @@ p.name {
   margin: auto;
   text-align: center;
   font-size: large;
+  text-shadow: 0px 0px 5px gray;
 }
 
 div.verticalLine {
@@ -16,4 +17,6 @@ div.verticalLine {
   position: absolute;
   top: 0px;
   right: 0px;
+  box-shadow: 0px 0px 5px gray;
+
 }

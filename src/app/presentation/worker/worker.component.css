@@ -10,6 +10,7 @@ div.task {
 div.name {
   position: absolute;
   right: 1%;
+  text-shadow: 0px 0px 5px gray;
 }
 
 div.tasks {
@@ -23,4 +24,5 @@ div.horLine {
   height: 2px;
   left: 0px;
   right: 0px;
+  box-shadow: 0px 0px 5px gray;
 }
