@@ -4,6 +4,8 @@ import {TaskModel} from '../../data/model/task/task';
 import {AppState} from '../../data/redux/appState';
 import {NgRedux} from '@angular-redux/store';
 import {TaskActions} from '../../data/redux/actions/taskActions';
+import {MatDialog} from '@angular/material';
+import {TaskEditFormComponent} from '../task-edit-form/task-edit-form.component';
 
 @Component({
   selector: 'task',
@@ -44,7 +46,7 @@ export class TaskComponent implements OnInit {
     return this.canvasConfig.taskHeight;
   }
 
-  constructor(private canvasConfig: CanvasConfig, private ngRedux: NgRedux<AppState>) {
+  constructor(private canvasConfig: CanvasConfig, private ngRedux: NgRedux<AppState>, public dialog: MatDialog) {
     this.setPosition(-1, -1);
   }
 
@@ -60,6 +62,13 @@ export class TaskComponent implements OnInit {
   }
 
   showMessage(s: string) {
-    alert(s);
+    let dialogRef = this.dialog.open(TaskEditFormComponent, {
+      width: '450px',
+      data: { message: s }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result: ' + result);
+    });
   }
 }
