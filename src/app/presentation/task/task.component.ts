@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CanvasConfig} from '../canvasConfig';
-import {TaskModel} from '../../model/task/task';
+import {TaskModel} from '../../data/model/task/task';
 
 @Component({
   selector: 'task',

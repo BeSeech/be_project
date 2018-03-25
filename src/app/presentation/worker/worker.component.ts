@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CanvasConfig} from '../canvasConfig';
-import {TaskModel} from '../../model/task/task';
-import {WorkerModel} from '../../model/worker/worker';
+import {TaskModel} from '../../data/model/task/task';
+import {WorkerModel} from '../../data/model/worker/worker';
 
 @Component({
   selector: 'worker',

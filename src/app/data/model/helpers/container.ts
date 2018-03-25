@@ -1,4 +1,4 @@
-import {UidArray} from '../helpers/uidArray';
+import {UidArray} from './uidArray';
 import {ElementWithUid} from './elementWithUid';
 
 export class Container<T extends ElementWithUid> {

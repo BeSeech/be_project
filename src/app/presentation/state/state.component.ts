@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {TaskStateModel} from '../../model/state/taskState';
+import {TaskStateModel} from '../../data/model/state/taskState';
 import {WorkerComponent} from '../worker/worker.component';
 
 @Component({

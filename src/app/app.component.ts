@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {NgRedux} from 'ng2-redux';
-import {AppState} from './model/appState';
-import {StateActions} from './redux/actions/stateActions';
-import {TaskStateModel} from './model/state/taskState';
+import {AppState} from './data/redux/appState';
+import {StateActions} from './data/redux/actions/stateActions';
+import {TaskStateModel} from './data/model/state/taskState';
 
 @Component({
   selector: 'app-root',

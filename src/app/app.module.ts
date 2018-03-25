@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {NgRedux, NgReduxModule} from 'ng2-redux';
+import {NgRedux, NgReduxModule} from '@angular-redux/store';
 
 
 import { AppComponent } from './app.component';
@@ -8,8 +8,8 @@ import { TaskComponent } from './presentation/task/task.component';
 import { WorkerComponent } from './presentation/worker/worker.component';
 import {CanvasConfig} from './presentation/canvasConfig';
 import { StateComponent } from './presentation/state/state.component';
-import {AppState} from './model/appState';
-import {taskReducer} from './redux/reducer/taskReducer';
+import {AppState} from './data/redux/appState';
+import {taskReducer} from './data/redux/reducer/taskReducer';
 
 
 @NgModule({
