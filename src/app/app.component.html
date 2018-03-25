@@ -1,7 +1,5 @@
 <div class="tasks">
 
-  <state [state]="{name: 'State One', color: 'red', columnCount: 2}"></state>
-  <state [state]="{name: 'State Two', color: 'green', columnCount: 2}"></state>
-  <state [state]="{name: 'State Three', color: 'blue', columnCount: 2}"></state>
+  <state *ngFor="let s of states" [state]="s"></state>
 
 </div>

@@ -9,6 +9,7 @@ import {WorkerModel} from '../model/worker/worker';
 import {UidTableManager} from '../model/helpers/uidTableManager';
 
 export class AppState {
+  mess: string;
   states: TaskStateContainer;
   workers: WorkerContainer;
   tasks: TaskContainer;
@@ -26,6 +27,7 @@ function createWorker(name: string, columnCount: number): WorkerModel {
 
 function createTaskState(name: string, color: string): TaskStateModel {
   const taskState: TaskStateModel = new TaskStateModel();
+  taskState.uid = Guid.create().toString();
   taskState.color = color;
   taskState.columnCount = 2;
   taskState.name = name;
@@ -34,13 +36,13 @@ function createTaskState(name: string, color: string): TaskStateModel {
 }
 
 export function getInitialState() {
+
   const appState: AppState = new AppState();
+  appState.mess = 'Here';
+
   appState.states = new TaskStateContainer();
   appState.workers = new WorkerContainer();
   appState.tasks = new TaskContainer();
-
-  const states: TaskStateContainer = appState.states;
-  const tasks: TaskContainer = appState.tasks;
 
   ContainerManager.AppendElement<WorkerModel>(createWorker('Worker One', 2), appState.workers);
   ContainerManager.AppendElement<WorkerModel>(createWorker('Worker Two', 2), appState.workers);
@@ -57,6 +59,5 @@ export function getInitialState() {
   taskState = createTaskState('State Three', 'black');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(2, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
-
   return appState;
 }

@@ -8,7 +8,7 @@ import { TaskComponent } from './presentation/task/task.component';
 import { WorkerComponent } from './presentation/worker/worker.component';
 import {CanvasConfig} from './presentation/canvasConfig';
 import { StateComponent } from './presentation/state/state.component';
-import {AppState} from './data/redux/appState';
+import {AppState, getInitialState} from './data/redux/appState';
 import {taskReducer} from './data/redux/reducer/taskReducer';
 
 
@@ -30,7 +30,7 @@ import {taskReducer} from './data/redux/reducer/taskReducer';
 })
 export class AppModule {
   constructor (ngRedux: NgRedux<AppState>) {
-    ngRedux.configureStore(taskReducer, new AppState());
+    ngRedux.configureStore(taskReducer, getInitialState());
   }
 
 }

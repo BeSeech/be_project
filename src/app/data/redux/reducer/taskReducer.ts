@@ -8,7 +8,7 @@ import {TaskStateModel} from '../../model/state/taskState';
 import {WorkerModel} from '../../model/worker/worker';
 
 export const taskReducer: Reducer<AppState> =
-  (state: AppState = getInitialState(), action: Action): AppState => {
+  (state: AppState, action: Action): AppState => {
     const newState: AppState = JSON.parse(JSON.stringify(state));
     switch (action.type) {
       case ADD_STATE:
