@@ -8,7 +8,6 @@ export class ContainerManager {
 
   static getElementByIndex<T extends ElementWithUid>(index: number, container: Container<T>): T {
     const uid = container.elementsSequence[index];
-    console.log(`We're in getElementByIndex<${container}>. Index is: ${index}; Uid is: ${container.elementsSequence[index]}`);
     if (!uid) {
       return null;
     }

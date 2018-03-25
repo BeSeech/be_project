@@ -15,9 +15,9 @@ export class AppState {
   tasks: TaskContainer;
 }
 
-function createWorker(name: string, columnCount: number): WorkerModel {
+function createWorker(name: string, columnCount: number, rowCount: number): WorkerModel {
   const worker: WorkerModel = new WorkerModel();
-  worker.rowCount = 2;
+  worker.rowCount = rowCount;
   worker.name = name;
   worker.uid = Guid.create().toString();
   worker.columnCount = columnCount;
@@ -44,9 +44,10 @@ export function getInitialState() {
   appState.workers = new WorkerContainer();
   appState.tasks = new TaskContainer();
 
-  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker One', 2), appState.workers);
-  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker Two', 2), appState.workers);
-  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker three', 2), appState.workers);
+  ContainerManager.AppendElement<WorkerModel>(createWorker('', 2, 4), appState.workers);
+  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker Two', 2, 2), appState.workers);
+  ContainerManager.AppendElement<WorkerModel>(createWorker('', 2, 2), appState.workers);
+  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker four', 2, 2), appState.workers);
 
   let taskState: TaskStateModel = createTaskState('State One', 'red');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(0, appState.workers).uid);
@@ -54,6 +55,7 @@ export function getInitialState() {
 
   taskState = createTaskState('State Two', 'green');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(1, appState.workers).uid);
+  taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(3, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
 
   taskState = createTaskState('State Three', 'black');

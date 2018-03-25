@@ -13,13 +13,6 @@ import {ContainerManager} from './data/model/helpers/containerManager';
 export class AppComponent {
   title = 'app';
 
-  states: Array<TaskStateModel>;
-
-  constructor(private ngRedux: NgRedux<AppState>) {
-    debugger;
-    this.states = ContainerManager.getElementsAsArray<TaskStateModel>(ngRedux.getState().states);
-    for (let i = 0; i < this.states.length; i++) {
-      console.log(`States[${i}] = ${this.states[i]};`);
-    }
+  constructor() {
   }
 }

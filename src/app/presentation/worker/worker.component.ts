@@ -11,16 +11,16 @@ import {WorkerModel} from '../../data/model/worker/worker';
 export class WorkerComponent implements OnInit {
 
   @Input() public worker: WorkerModel;
+  @Input() public color: string;
 
   public items: Array<{ r: number, c: number }>;
 
   width(): number {
-    return this.canvasConfig.taskGap + this.worker.columnCount * (this.canvasConfig.taskWidth + this.canvasConfig.taskGap);
+    return this.canvasConfig.getWorkerWidthByColumnCount(this.worker.columnCount);
   }
 
   height(): number {
-    return this.canvasConfig.workerNameHeight + this.canvasConfig.taskGap +
-      this.worker.rowCount * (this.canvasConfig.taskHeight + this.canvasConfig.taskGap);
+    return this.canvasConfig.getWorkerHeightByRowCount(this.worker.rowCount);
   }
 
   constructor(private canvasConfig: CanvasConfig) {

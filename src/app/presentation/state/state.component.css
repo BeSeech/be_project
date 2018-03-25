@@ -1,7 +1,6 @@
 div.state {
-  background-color: aqua;
-  width: fit-content;
-  position: relative;
+  #background-color: aqua;
+  position: absolute;
 }
 
 p.name {

@@ -10,6 +10,7 @@ import {CanvasConfig} from './presentation/canvasConfig';
 import { StateComponent } from './presentation/state/state.component';
 import {AppState, getInitialState} from './data/redux/appState';
 import {taskReducer} from './data/redux/reducer/taskReducer';
+import { SateListComponent } from './presentation/sate-list/sate-list.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {taskReducer} from './data/redux/reducer/taskReducer';
     AppComponent,
     TaskComponent,
     WorkerComponent,
-    StateComponent
+    StateComponent,
+    SateListComponent
   ],
   imports: [
     BrowserModule,

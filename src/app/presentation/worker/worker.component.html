@@ -1,6 +1,6 @@
 <div class="worker" [style.width.px]="width()" [style.height.px]="height()">
-  <div class="horLine" [style.background-color]="worker.color"></div>
-  <div class="name" [style.color]="worker.color">{{worker.name}}</div>
+  <div class="horLine" [style.background-color]="color"></div>
+  <div class="name" [style.color]="color">{{worker.name}}</div>
   <div class="tasks">
     <task *ngFor="let item of this.items" [row]="item.r" [column]="item.c" [task]="getTask(item.r, item.c)"></task>
   </div>
