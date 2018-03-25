@@ -2,5 +2,5 @@
   <p class="name" [style.color]="state.color">{{state.name}}</p>
   <div class="verticalLine" [style.background-color]="state.color"></div>
 
-  <worker *ngFor="let w of workers" [worker]="w" [color]="state.color"></worker>
+  <worker *ngFor="let w of workers" [worker]="w" [color]="state.color" [columnCount]="state.columnCount"></worker>
 </div>

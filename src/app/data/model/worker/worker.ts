@@ -1,10 +1,8 @@
 import {ElementWithUid} from '../helpers/elementWithUid';
-import {UidTable} from '../helpers/uidTable';
+import {UidArray} from '../helpers/uidArray';
 
 export class WorkerModel extends ElementWithUid {
   name: string;
-  color: string;
-  columnCount: number;
   rowCount: number;
-  taskTable: UidTable;
+  tasks: UidArray = new UidArray();
 }

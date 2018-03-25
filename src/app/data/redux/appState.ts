@@ -6,7 +6,7 @@ import {TaskStateModel} from '../model/state/taskState';
 import {UidArray} from '../model/helpers/uidArray';
 import {ContainerManager} from '../model/helpers/containerManager';
 import {WorkerModel} from '../model/worker/worker';
-import {UidTableManager} from '../model/helpers/uidTableManager';
+import {TaskModel} from '../model/task/task';
 
 export class AppState {
   mess: string;
@@ -20,8 +20,7 @@ function createWorker(name: string, columnCount: number, rowCount: number): Work
   worker.rowCount = rowCount;
   worker.name = name;
   worker.uid = Guid.create().toString();
-  worker.columnCount = columnCount;
-  worker.taskTable = UidTableManager.init(worker.rowCount, worker.columnCount);
+  worker.tasks = new UidArray();
   return worker;
 }
 
@@ -35,6 +34,16 @@ function createTaskState(name: string, color: string): TaskStateModel {
   return taskState;
 }
 
+function createTask(summary: string): TaskModel {
+  const task = new TaskModel();
+  task.summary = summary;
+  task.uid = Guid.create().toString();
+  task.expectedDuration = 10;
+  task.actualDuration = 1;
+  task.id = '1';
+  return task;
+}
+
 export function getInitialState() {
 
   const appState: AppState = new AppState();
@@ -44,11 +53,36 @@ export function getInitialState() {
   appState.workers = new WorkerContainer();
   appState.tasks = new TaskContainer();
 
-  ContainerManager.AppendElement<WorkerModel>(createWorker('', 2, 4), appState.workers);
-  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker Two', 2, 2), appState.workers);
-  ContainerManager.AppendElement<WorkerModel>(createWorker('', 2, 2), appState.workers);
-  ContainerManager.AppendElement<WorkerModel>(createWorker('Worker four', 2, 2), appState.workers);
+  // Tasks
+  ContainerManager.AppendElement<TaskModel>(createTask('Task 1'), appState.tasks);
+  ContainerManager.AppendElement<TaskModel>(createTask('Task 2'), appState.tasks);
+  ContainerManager.AppendElement<TaskModel>(createTask('Task 3'), appState.tasks);
+  ContainerManager.AppendElement<TaskModel>(createTask('Task 4'), appState.tasks);
+  ContainerManager.AppendElement<TaskModel>(createTask('Task 5'), appState.tasks);
+  ContainerManager.AppendElement<TaskModel>(createTask('Task 6'), appState.tasks);
 
+  // Workers
+  let worker: WorkerModel;
+  worker = createWorker('', 2, 4);
+  worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(0, appState.tasks).uid);
+  ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
+
+  worker = createWorker('Worker Two', 2, 2);
+  worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(1, appState.tasks).uid);
+  worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(2, appState.tasks).uid);
+  ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
+
+  worker = createWorker('', 2, 2);
+  worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(3, appState.tasks).uid);
+  worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(5, appState.tasks).uid);
+  ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
+
+  worker = createWorker('Worker four', 2, 2);
+  worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(4, appState.tasks).uid);
+  ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
+
+
+  // States
   let taskState: TaskStateModel = createTaskState('State One', 'red');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(0, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
