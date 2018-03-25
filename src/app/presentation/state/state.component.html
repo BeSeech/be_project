@@ -1,0 +1,8 @@
+<div class="state">
+  <p class="name" [style.color]="state.color">{{state.name}}</p>
+  <div class="verticalLine" [style.background-color]="state.color"></div>
+
+  <worker [worker]="{name: 'Worker One', color: state.color, columnCount: state.columnCount, rowCount: 1}"></worker>
+  <worker [worker]="{name: 'Worker Two', color: state.color, columnCount: state.columnCount, rowCount: 1}"></worker>
+  <worker [worker]="{name: 'Worker Three', color: state.color, columnCount: state.columnCount, rowCount: 3}"></worker>
+</div>

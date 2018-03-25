@@ -1,0 +1,20 @@
+div.state {
+  background-color: aqua;
+  width: fit-content;
+  position: relative;
+}
+
+p.name {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  font-size: large;
+}
+
+div.verticalLine {
+  width: 2px;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}

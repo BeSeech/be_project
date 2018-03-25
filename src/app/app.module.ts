@@ -1,25 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {NgRedux, NgReduxModule} from 'ng2-redux';
 
 
 import { AppComponent } from './app.component';
 import { TaskComponent } from './presentation/task/task.component';
 import { WorkerComponent } from './presentation/worker/worker.component';
 import {CanvasConfig} from './presentation/canvasConfig';
+import { StateComponent } from './presentation/state/state.component';
+import {AppState} from './model/appState';
+import {taskReducer} from './redux/reducer/taskReducer';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
-    WorkerComponent
+    WorkerComponent,
+    StateComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgReduxModule
   ],
   providers: [
     {provide: CanvasConfig, useClass: CanvasConfig}
     ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor (ngRedux: NgRedux<AppState>) {
+    ngRedux.configureStore(taskReducer, new AppState());
+  }
+
+}
