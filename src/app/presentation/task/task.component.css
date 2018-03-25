@@ -3,10 +3,15 @@ div.task {
   background-color: orange;
 }
 
+div.task.selected {
+  background-color: green;
+}
+
 div.undefined {
   position: absolute;
-  background-color: red;
-  visibility: hidden;
+  background-color: white;
+  #border: 1px dashed skyblue;
+  #visibility: hidden;
 }
 
 div.summary {

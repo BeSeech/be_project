@@ -6,6 +6,7 @@ import {ADD_WORKER, AddWorkerAction} from '../actions/workerActions';
 import {ContainerManager} from '../../model/helpers/containerManager';
 import {TaskStateModel} from '../../model/state/taskState';
 import {WorkerModel} from '../../model/worker/worker';
+import {SELECT_TASK, SelectTaskAction} from '../actions/taskActions';
 
 export const taskReducer: Reducer<AppState> =
   (state: AppState, action: Action): AppState => {
@@ -26,6 +27,9 @@ export const taskReducer: Reducer<AppState> =
         ContainerManager.AppendElement<WorkerModel>(worker, newState.workers);
         const targetState: TaskStateModel = ContainerManager.getElementByUid<TaskStateModel>(targetUid, newState.states);
         targetState.workers.push(worker.uid);
+        return newState;
+      case SELECT_TASK:
+        newState.selectedTaskUid = (<SelectTaskAction>action).taskUid;
         return newState;
       default:
         return newState;

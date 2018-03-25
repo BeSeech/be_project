@@ -27,12 +27,22 @@ export class WorkerComponent implements OnInit {
     return this.canvasConfig.getWorkerHeightByRowCount(this.worker.rowCount);
   }
 
+  maxTasksCount(): number {
+    return this.worker.rowCount * this.columnCount;
+  }
+
+  tasksCount(): number {
+    return this.worker.tasks.length;
+  }
+
+  canAcceptTask(): boolean {
+    return this.tasksCount() < this.maxTasksCount();
+  }
+
   constructor(private canvasConfig: CanvasConfig, private ngRedux: NgRedux<AppState>) {
   }
 
   private getIndexByRowColumn(row: number, column: number): number {
-
-    // 0 1 2 | 3 4 5 | 6 7 8
     return row * this.columnCount + column;
   }
 

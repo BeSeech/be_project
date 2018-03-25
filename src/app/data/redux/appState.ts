@@ -9,7 +9,7 @@ import {WorkerModel} from '../model/worker/worker';
 import {TaskModel} from '../model/task/task';
 
 export class AppState {
-  mess: string;
+  selectedTaskUid: string;
   states: TaskStateContainer;
   workers: WorkerContainer;
   tasks: TaskContainer;
@@ -47,7 +47,7 @@ function createTask(summary: string): TaskModel {
 export function getInitialState() {
 
   const appState: AppState = new AppState();
-  appState.mess = 'Here';
+  appState.selectedTaskUid = '';
 
   appState.states = new TaskStateContainer();
   appState.workers = new WorkerContainer();
