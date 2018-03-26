@@ -10,7 +10,7 @@
      [style.top.px]="getTop()" [style.left.px]="getLeft()"
      (click)="select()"
      (dblclick)="editTask(true)"
-     [sh-context]="contextMenuItems" [sh-options]="contextMenuOptions" [sh-data-context]="this" (onBeforeMenuOpen)="onBefore($event)">
+     [sh-context]="contextMenu.contextMenuItems" [sh-options]="contextMenu.contextMenuOptions" [sh-data-context]="this" (onBeforeMenuOpen)="onBefore($event)">
   <div class="id right">{{task.id}}</div>
   <div class="summary">{{task.summary}}</div>
   <div class="estimating right">{{task.actualDuration}}/{{task.expectedDuration}}</div>

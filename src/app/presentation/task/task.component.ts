@@ -11,6 +11,7 @@ import {MatDialogRef} from '@angular/material/dialog/typings/dialog-ref';
 import {WorkerComponent} from '../worker/worker.component';
 import {ContainerManager} from '../../data/model/helpers/containerManager';
 import {BeforeMenuEvent, IShContextMenuItem, IShContextOptions} from 'ng2-right-click-menu';
+import {TaskContextMenu} from '../dialogs/taskContextMenu';
 
 @Component({
   selector: 'task',
@@ -23,38 +24,14 @@ export class TaskComponent implements OnInit {
   @Input() public row: number;
   @Input() public column: number;
   @Input() public hostUid: string;
-  contextMenuItems: IShContextMenuItem[];
-  contextMenuOptions: IShContextOptions;
+  public contextMenu: TaskContextMenu = new TaskContextMenu();
 
-  clickEvent($event: any) {
-    console.log($event.menuItem.label + 'task ' + (<TaskComponent>$event.dataContext).task.uid);
+  public onBefore = (event: BeforeMenuEvent) => {
+    if (!this.isSelected()) {
+      this.select();
+    }
+    event.open();
   }
-
-  private initContextMenu() {
-    this.contextMenuOptions = {
-      theme: 'dark'
-    };
-
-    this.contextMenuItems = [
-      {
-        label: 'Edit',
-        onClick: this.clickEvent
-      },
-      {
-        label: 'Move',
-        onClick: this.clickEvent
-      },
-      {
-        label: 'Delete',
-        disabled: ctx => {
-          return ctx.Two === 'Two';
-        },
-        onClick: this.clickEvent
-      }
-    ];
-  }
-
-
   public isSelected(): boolean {
     return (this.task.uid === this.ngRedux.getState().selectedTaskUid);
   }
@@ -100,7 +77,6 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initContextMenu();
   }
 
   getTop(): number {
@@ -157,11 +133,4 @@ export class TaskComponent implements OnInit {
       }
     });
   }
-
-  onBefore = (event: BeforeMenuEvent) => {
-    if (!this.isSelected()) {
-      this.select();
-    }
-    event.open();
-  };
 }
