@@ -1,6 +1,6 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {TaskModel} from '../../data/model/task/task';
+import {TaskModel} from '../../../data/model/task/task';
 
 @Component({
   selector: 'task-edit-form',

@@ -5,12 +5,12 @@ import {AppState} from '../../data/redux/appState';
 import {NgRedux} from '@angular-redux/store';
 import {TaskActions} from '../../data/redux/actions/taskActions';
 import {MatDialog} from '@angular/material';
-import {TaskEditFormComponent} from '../task-edit-form/task-edit-form.component';
+import {TaskEditFormComponent} from '../dialogs/task-edit-form/task-edit-form.component';
 import {TaskCrudApi} from '../../services/restful/taskCrudApi';
 import {MatDialogRef} from '@angular/material/dialog/typings/dialog-ref';
 import {WorkerComponent} from '../worker/worker.component';
-import {WorkerModel} from '../../data/model/worker/worker';
 import {ContainerManager} from '../../data/model/helpers/containerManager';
+import {BeforeMenuEvent, IShContextMenuItem, IShContextOptions} from 'ng2-right-click-menu';
 
 @Component({
   selector: 'task',
@@ -23,6 +23,37 @@ export class TaskComponent implements OnInit {
   @Input() public row: number;
   @Input() public column: number;
   @Input() public hostUid: string;
+  contextMenuItems: IShContextMenuItem[];
+  contextMenuOptions: IShContextOptions;
+
+  clickEvent($event: any) {
+    console.log($event.menuItem.label + 'task ' + (<TaskComponent>$event.dataContext).task.uid);
+  }
+
+  private initContextMenu() {
+    this.contextMenuOptions = {
+      theme: 'dark'
+    };
+
+    this.contextMenuItems = [
+      {
+        label: 'Edit',
+        onClick: this.clickEvent
+      },
+      {
+        label: 'Move',
+        onClick: this.clickEvent
+      },
+      {
+        label: 'Delete',
+        disabled: ctx => {
+          return ctx.Two === 'Two';
+        },
+        onClick: this.clickEvent
+      }
+    ];
+  }
+
 
   public isSelected(): boolean {
     return (this.task.uid === this.ngRedux.getState().selectedTaskUid);
@@ -69,6 +100,7 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initContextMenu();
   }
 
   getTop(): number {
@@ -99,6 +131,11 @@ export class TaskComponent implements OnInit {
     return dialogRef;
   }
 
+  showMenu($event) {
+    const x = $event.x;
+    const y = $event.y;
+  }
+
   editTask(isEditMode: boolean) {
     const dialogRef = this.showEditTaskDialog(isEditMode);
 
@@ -120,4 +157,11 @@ export class TaskComponent implements OnInit {
       }
     });
   }
+
+  onBefore = (event: BeforeMenuEvent) => {
+    if (!this.isSelected()) {
+      this.select();
+    }
+    event.open();
+  };
 }
