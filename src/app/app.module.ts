@@ -11,8 +11,9 @@ import {AppState, getInitialState} from './data/redux/appState';
 import {taskReducer} from './data/redux/reducer/taskReducer';
 import {SateListComponent} from './presentation/sate-list/sate-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTooltipModule, MatDialogModule} from '@angular/material';
+import {MatTooltipModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatGridListModule, MatDividerModule} from '@angular/material';
 import {TaskEditFormComponent} from './presentation/task-edit-form/task-edit-form.component';
+import {TaskCrudApi} from './services/restful/taskCrudApi';
 
 
 @NgModule({
@@ -32,10 +33,15 @@ import {TaskEditFormComponent} from './presentation/task-edit-form/task-edit-for
     BrowserAnimationsModule,
     NgReduxModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
+    MatDividerModule
   ],
   providers: [
-    {provide: CanvasConfig, useClass: CanvasConfig}
+    {provide: CanvasConfig, useClass: CanvasConfig},
+    {provide: TaskCrudApi, useClass: TaskCrudApi}
   ],
   bootstrap: [AppComponent]
 })

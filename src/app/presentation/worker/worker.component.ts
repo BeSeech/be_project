@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {CanvasConfig} from '../canvasConfig';
 import {TaskModel} from '../../data/model/task/task';
 import {WorkerModel} from '../../data/model/worker/worker';
@@ -39,7 +39,13 @@ export class WorkerComponent implements OnInit {
     return this.tasksCount() < this.maxTasksCount();
   }
 
-  constructor(private canvasConfig: CanvasConfig, private ngRedux: NgRedux<AppState>) {
+  constructor(private canvasConfig: CanvasConfig,
+              private ngRedux: NgRedux<AppState>,
+              private changeDetector: ChangeDetectorRef) {
+  }
+
+  public reload() {
+    this.worker = ContainerManager.getElementByUid<WorkerModel>(this.worker.uid, this.ngRedux.getState().workers);
   }
 
   private getIndexByRowColumn(row: number, column: number): number {

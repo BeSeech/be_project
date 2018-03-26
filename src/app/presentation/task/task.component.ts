@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Host, Input, OnInit} from '@angular/core';
 import {CanvasConfig} from '../canvasConfig';
 import {TaskModel} from '../../data/model/task/task';
 import {AppState} from '../../data/redux/appState';
@@ -6,6 +6,11 @@ import {NgRedux} from '@angular-redux/store';
 import {TaskActions} from '../../data/redux/actions/taskActions';
 import {MatDialog} from '@angular/material';
 import {TaskEditFormComponent} from '../task-edit-form/task-edit-form.component';
+import {TaskCrudApi} from '../../services/restful/taskCrudApi';
+import {MatDialogRef} from '@angular/material/dialog/typings/dialog-ref';
+import {WorkerComponent} from '../worker/worker.component';
+import {WorkerModel} from '../../data/model/worker/worker';
+import {ContainerManager} from '../../data/model/helpers/containerManager';
 
 @Component({
   selector: 'task',
@@ -17,6 +22,7 @@ export class TaskComponent implements OnInit {
   @Input() public task: TaskModel;
   @Input() public row: number;
   @Input() public column: number;
+  @Input() public hostUid: string;
 
   public isSelected(): boolean {
     return (this.task.uid === this.ngRedux.getState().selectedTaskUid);
@@ -31,8 +37,12 @@ export class TaskComponent implements OnInit {
     this.column = column;
   }
 
+  public reload() {
+    this.task = ContainerManager.getElementByUid<TaskModel>(this.task.uid, this.ngRedux.getState().tasks);
+  }
+
   hasTask(): boolean {
-    if ( (this.task !== null) && (this.task !== undefined) ) {
+    if ((this.task !== null) && (this.task !== undefined)) {
       return true;
     }
     return false;
@@ -46,7 +56,15 @@ export class TaskComponent implements OnInit {
     return this.canvasConfig.taskHeight;
   }
 
-  constructor(private canvasConfig: CanvasConfig, private ngRedux: NgRedux<AppState>, public dialog: MatDialog) {
+  private getHostUid(): string {
+    return this.host.worker.uid;
+  }
+
+  constructor(private canvasConfig: CanvasConfig,
+              private ngRedux: NgRedux<AppState>,
+              public dialog: MatDialog,
+              private taskCrudApi: TaskCrudApi,
+              @Host() private host: WorkerComponent) {
     this.setPosition(-1, -1);
   }
 
@@ -54,21 +72,52 @@ export class TaskComponent implements OnInit {
   }
 
   getTop(): number {
-    return  + this.canvasConfig.taskGap + this.row * (this.canvasConfig.taskHeight + this.canvasConfig.taskGap);
+    return +this.canvasConfig.taskGap + this.row * (this.canvasConfig.taskHeight + this.canvasConfig.taskGap);
   }
 
   getLeft(): number {
-    return  + this.canvasConfig.taskGap + this.column * (this.canvasConfig.taskWidth +  + this.canvasConfig.taskGap);
+    return +this.canvasConfig.taskGap + this.column * (this.canvasConfig.taskWidth + +this.canvasConfig.taskGap);
   }
 
-  showMessage(s: string) {
-    let dialogRef = this.dialog.open(TaskEditFormComponent, {
-      width: '450px',
-      data: { message: s }
+  createDefaultTask(): TaskModel {
+    const task = new TaskModel();
+    task.summary = '';
+    task.id = '';
+    task.actualDuration = 0;
+    return task;
+  }
+
+
+  showEditTaskDialog(isEditMode: boolean): MatDialogRef<TaskEditFormComponent> {
+    const dialogRef = this.dialog.open<TaskEditFormComponent>(TaskEditFormComponent, {
+      width: '50%',
+      data: {
+        task: isEditMode ? Object.assign({}, this.task) : this.createDefaultTask(),
+        isEditMode: isEditMode
+      }
     });
+    return dialogRef;
+  }
+
+  editTask(isEditMode: boolean) {
+    const dialogRef = this.showEditTaskDialog(isEditMode);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result: ' + result);
+      if (!result) {
+        return;
+      }
+
+      if (isEditMode) {
+        this.taskCrudApi.putTask(result).subscribe(t => {
+          this.ngRedux.dispatch(TaskActions.updateTask(t));
+          this.reload();
+        });
+      } else {
+        this.taskCrudApi.postTask(this.getHostUid(), result).subscribe(t => {
+          this.ngRedux.dispatch(TaskActions.addTask(this.getHostUid(), t));
+          this.host.reload();
+        });
+      }
     });
   }
 }

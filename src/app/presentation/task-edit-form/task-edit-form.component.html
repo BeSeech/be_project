@@ -1,5 +1,31 @@
-<h2 mat-dialog-title>Message</h2>
-<mat-dialog-content>{{ message }}</mat-dialog-content>
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content>
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput required placeholder="Id" value="{{task.id}}" #taskId>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input required matInput placeholder="Summary" value="{{task.summary}}" #taskSummary>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" placeholder="Expected duration" min="0" value="{{task.expectedDuration}}"
+             #taskExpectedDuration>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isEditMode" class="example-full-width">
+      <input matInput placeholder="Task uid" value="{{task.uid}}"
+             #taskUid readonly>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
 <mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="true">Ok</button>
+  <mat-grid-list cols="2">
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button mat-button [mat-dialog-close]="collectNewTaskFromFormAndComponent()">Ok</button>
+  </mat-grid-list>
 </mat-dialog-actions>

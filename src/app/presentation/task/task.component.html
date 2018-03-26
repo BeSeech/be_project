@@ -1,6 +1,6 @@
 <div *ngIf="!hasTask()" class="undefined" [style.width.px]="width()" [style.height.px]="height()"
      [style.top.px]="getTop()" [style.left.px]="getLeft()"
-     (dblclick)="showMessage('Add task')" >
+     (dblclick)="editTask(false)" >
 
 </div>
 
@@ -8,7 +8,8 @@
      [ngClass]="{'task': true, 'selected': isSelected()}"
      [style.width.px]="width()" [style.height.px]="height()"
      [style.top.px]="getTop()" [style.left.px]="getLeft()"
-     (click)="select()">
+     (click)="select()"
+     (dblclick)="editTask(true)" >
   <div class="id right">{{task.id}}</div>
   <div class="summary">{{task.summary}}</div>
   <div class="estimating right">{{task.actualDuration}}/{{task.expectedDuration}}</div>
