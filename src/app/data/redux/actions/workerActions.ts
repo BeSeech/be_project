@@ -4,17 +4,17 @@ import {TaskStateModel} from '../../model/state/taskState';
 
 export interface AddWorkerAction extends Action {
   worker: WorkerModel;
-  targetUid: string;
+  hostUid: string;
 }
 
 export const ADD_WORKER = 'ADD_WORKER';
 
 export class WorkerActions {
-  static addWorker(targetName: string, worker: WorkerModel): AddWorkerAction {
+  static addWorker(hostUid: string, worker: WorkerModel): AddWorkerAction {
     return {
       type: ADD_WORKER,
       worker: worker,
-      targetUid: targetName
+      hostUid: hostUid
     };
   }
 }

@@ -10,6 +10,9 @@ export class TaskContextMenu {
       case 'Edit':
         taskComonent.editTask(true);
         return;
+      case 'Delete':
+        taskComonent.deleteTask();
+        return;
       default:
         console.log($event.menuItem.label + ' task ' + taskComonent.task.uid);
     }

@@ -1,5 +1,5 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskModel} from '../../../data/model/task/task';
 
 @Component({
@@ -16,7 +16,18 @@ export class TaskEditFormComponent implements OnInit {
   @ViewChild('taskId') htmlTaskId: ElementRef;
   @ViewChild('taskSummary') htmlTaskSummary: ElementRef;
   @ViewChild('taskExpectedDuration') htmlTaskExpectedDuration: ElementRef;
-  @ViewChild('taskUid') htmlTaskUid: ElementRef;
+  @ViewChild('selfUid') htmlTaskUid: ElementRef;
+
+  static showDialog(dialog: MatDialog, isEditMode: boolean, task: TaskModel): MatDialogRef<TaskEditFormComponent> {
+    const dialogRef = dialog.open<TaskEditFormComponent>(TaskEditFormComponent, {
+      width: '50%',
+      data: {
+        task: task,
+        isEditMode: isEditMode
+      }
+    });
+    return dialogRef;
+  }
 
   constructor(public dialogRef: MatDialogRef<TaskEditFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {

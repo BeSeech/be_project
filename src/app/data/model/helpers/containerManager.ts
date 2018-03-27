@@ -31,6 +31,10 @@ export class ContainerManager {
     }
   }
 
+  static GetElementIndexByUid<T extends ElementWithUid>(uid: string, container: Container<T>): number {
+    return container.elementsSequence.indexOf(uid, 0);
+  }
+
   static InsertElement<T extends ElementWithUid>(element: T, position: number, container: Container<T>): void {
     container.elementsMap[element.uid] = element;
     container.elementsSequence.splice(position, 0, element.uid);

@@ -15,4 +15,10 @@ export class TaskCrudApi {
     const result = observableOf(task);
     return result;
   }
+
+  deleteTask(task: TaskModel): Observable<TaskModel> {
+    const result = observableOf(task);
+    return result;
+  }
+
 }

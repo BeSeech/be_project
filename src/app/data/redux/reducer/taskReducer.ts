@@ -6,15 +6,26 @@ import {ADD_WORKER, AddWorkerAction} from '../actions/workerActions';
 import {ContainerManager} from '../../model/helpers/containerManager';
 import {TaskStateModel} from '../../model/state/taskState';
 import {WorkerModel} from '../../model/worker/worker';
-import {ADD_TASK, AddTaskAction, SELECT_TASK, SelectTaskAction, UPDATE_TASK, UpdateTaskAction} from '../actions/taskActions';
+import {
+  ADD_TASK, AddTaskAction, DELETE_TASK, SELECT_TASK, SelectTaskAction, UPDATE_TASK,
+  UpdateTaskAction
+} from '../actions/taskActions';
 import {TaskModel} from '../../model/task/task';
 
 export const taskReducer: Reducer<AppState> =
   (state: AppState, action: Action): AppState => {
     const newState: AppState = JSON.parse(JSON.stringify(state));
+    const task: TaskModel = 'task' in action ? (<any>action).task : null;
+    const hostUid: string = 'hostUid' in action ? (<any>action).hostUid : '';
+    const selfUid: string = 'selfUid' in action ? (<any>action).selfUid : '';
+    const stateValue: TaskStateModel = 'state' in action ? (<any>action).state : null;
+    const worker: WorkerModel = 'worker' in action ? (<any>action).worker : null;
+    const getWorkerByUid = (uid: string): WorkerModel => {
+      return ContainerManager.getElementByUid<WorkerModel>(uid, newState.workers)
+    };
+
     switch (action.type) {
       case ADD_STATE:
-        const stateValue = (<AddStateAction>action).state;
         ContainerManager.AppendElement<TaskStateModel>(stateValue, newState.states);
         return newState;
       case DELETE_STATE:
@@ -23,26 +34,28 @@ export const taskReducer: Reducer<AppState> =
         ContainerManager.DeleteElement<TaskStateModel>(taskState, newState.states);
         return newState;
       case ADD_WORKER:
-        const worker: WorkerModel = (<AddWorkerAction>action).worker;
-        const targetUid: string = (<AddWorkerAction>action).targetUid;
         ContainerManager.AppendElement<WorkerModel>(worker, newState.workers);
-        const targetState: TaskStateModel = ContainerManager.getElementByUid<TaskStateModel>(targetUid, newState.states);
+        const targetState: TaskStateModel = ContainerManager.getElementByUid<TaskStateModel>(hostUid, newState.states);
         targetState.workers.push(worker.uid);
         return newState;
       case SELECT_TASK:
-        newState.selectedTaskUid = (<SelectTaskAction>action).taskUid;
+        newState.selectedTaskUid = selfUid;
         return newState;
       case ADD_TASK:
-        const newTask: TaskModel = (<AddTaskAction>action).task;
-        const hostUid: string = (<AddTaskAction>action).hostUid;
-        ContainerManager.AppendElement<TaskModel>(newTask, newState.tasks);
-        const hostWorker: WorkerModel = ContainerManager.getElementByUid<WorkerModel>(hostUid, newState.workers);
-        hostWorker.tasks.push(newTask.uid);
+        ContainerManager.AppendElement<TaskModel>(task, newState.tasks);
+        getWorkerByUid(hostUid).tasks.push(task.uid);
         return newState;
       case UPDATE_TASK:
-        const editedTask: TaskModel = (<UpdateTaskAction>action).task;
-        ContainerManager.DeleteElement<TaskModel>(editedTask, newState.tasks);
-        ContainerManager.AppendElement<TaskModel>(editedTask, newState.tasks);
+        ContainerManager.DeleteElement<TaskModel>(task, newState.tasks);
+        ContainerManager.AppendElement<TaskModel>(task, newState.tasks);
+        return newState;
+      case DELETE_TASK:
+        ContainerManager.DeleteElement<TaskModel>(task, newState.tasks);
+        const hostWorker: WorkerModel = getWorkerByUid(hostUid);
+        const index = hostWorker.tasks.indexOf(task.uid, 0);
+        if (index > -1) {
+          hostWorker.tasks.splice(index, 1);
+        }
         return newState;
       default:
         return newState;

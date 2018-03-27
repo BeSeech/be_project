@@ -12,6 +12,7 @@ import {WorkerComponent} from '../worker/worker.component';
 import {ContainerManager} from '../../data/model/helpers/containerManager';
 import {BeforeMenuEvent, IShContextMenuItem, IShContextOptions} from 'ng2-right-click-menu';
 import {TaskContextMenu} from '../dialogs/taskContextMenu';
+import {YesNoDialogComponent} from '../dialogs/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
   selector: 'task',
@@ -31,7 +32,8 @@ export class TaskComponent implements OnInit {
       this.select();
     }
     event.open();
-  }
+  };
+
   public isSelected(): boolean {
     return (this.task.uid === this.ngRedux.getState().selectedTaskUid);
   }
@@ -96,24 +98,29 @@ export class TaskComponent implements OnInit {
   }
 
 
-  showEditTaskDialog(isEditMode: boolean): MatDialogRef<TaskEditFormComponent> {
-    const dialogRef = this.dialog.open<TaskEditFormComponent>(TaskEditFormComponent, {
-      width: '50%',
-      data: {
-        task: isEditMode ? Object.assign({}, this.task) : this.createDefaultTask(),
-        isEditMode: isEditMode
-      }
-    });
-    return dialogRef;
-  }
-
   showMenu($event) {
     const x = $event.x;
     const y = $event.y;
   }
 
+  deleteTask() {
+    const dialogRef = YesNoDialogComponent.showDialog(
+      this.dialog, 'Confirmation dialog', `Do you really want to delete the task: "${this.task.id}"?`);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      this.taskCrudApi.deleteTask(this.task).subscribe(t => {
+        this.ngRedux.dispatch(TaskActions.deleteTask(this.getHostUid(), t));
+        this.host.reload();
+      });
+    });
+  }
+
   editTask(isEditMode: boolean) {
-    const dialogRef = this.showEditTaskDialog(isEditMode);
+    const dialogRef = TaskEditFormComponent.showDialog(
+      this.dialog, isEditMode, isEditMode ? Object.assign({}, this.task) : this.createDefaultTask());
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) {

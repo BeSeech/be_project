@@ -23,6 +23,7 @@ import {
 import {TaskEditFormComponent} from './presentation/dialogs/task-edit-form/task-edit-form.component';
 import {TaskCrudApi} from './services/restful/taskCrudApi';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
+import { YesNoDialogComponent } from './presentation/dialogs/yes-no-dialog/yes-no-dialog.component';
 
 
 @NgModule({
@@ -32,10 +33,12 @@ import {ShContextMenuModule} from 'ng2-right-click-menu';
     WorkerComponent,
     StateComponent,
     SateListComponent,
-    TaskEditFormComponent
+    TaskEditFormComponent,
+    YesNoDialogComponent
   ],
   entryComponents: [
-    TaskEditFormComponent
+    TaskEditFormComponent,
+    YesNoDialogComponent
   ],
   imports: [
     BrowserModule,
