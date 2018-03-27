@@ -40,6 +40,6 @@
 <mat-dialog-actions>
   <mat-grid-list cols="2">
     <button mat-button [mat-dialog-close]="null">Cancel</button>
-    <button mat-button [mat-dialog-close]="collectNewTaskFromFormAndComponent()">Ok</button>
+    <button mat-button [disabled]="!form.valid" [mat-dialog-close]="collectNewTaskFromFormAndComponent()">Ok</button>
   </mat-grid-list>
 </mat-dialog-actions>
