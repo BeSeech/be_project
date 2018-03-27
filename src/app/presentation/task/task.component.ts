@@ -81,6 +81,11 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
   }
 
+  getDurationCaption(duration: number): string {
+    return (duration) ? duration.toString() : '?';
+  }
+
+
   getTop(): number {
     return +this.canvasConfig.taskGap + this.row * (this.canvasConfig.taskHeight + this.canvasConfig.taskGap);
   }

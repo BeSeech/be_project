@@ -1,7 +1,7 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskModel} from '../../../data/model/task/task';
-import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 
 @Component({
   selector: 'task-edit-form',
@@ -31,6 +31,18 @@ export class TaskEditFormComponent implements OnInit {
     return dialogRef;
   }
 
+  getFormValidationErrors() {
+    Object.keys(this.form.controls).forEach(key => {
+
+      const controlErrors: ValidationErrors = this.form.get(key).errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach(keyError => {
+          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+        });
+      }
+    });
+  }
+
   constructor(public dialogRef: MatDialogRef<TaskEditFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               fb: FormBuilder) {
@@ -40,9 +52,9 @@ export class TaskEditFormComponent implements OnInit {
 
     this.form = fb.group(
       {
-        'id': [this.task.id],
-        'summary': [this.task.summary],
-        'expectedDuration': [this.task.expectedDuration],
+        'id': [this.task.id, [Validators.required, Validators.maxLength(20)]],
+        'summary': [this.task.summary, [Validators.required, Validators.maxLength(200)]],
+        'expectedDuration': [this.task.expectedDuration, [Validators.required]],
         'uid': [this.task.uid]
       });
 
