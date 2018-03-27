@@ -2,6 +2,7 @@ import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskModel} from '../../../data/model/task/task';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {CustomValidators} from '../../validators/customValidators';
 
 @Component({
   selector: 'task-edit-form',
@@ -54,7 +55,7 @@ export class TaskEditFormComponent implements OnInit {
       {
         'id': [this.task.id, [Validators.required, Validators.maxLength(20)]],
         'summary': [this.task.summary, [Validators.required, Validators.maxLength(200)]],
-        'expectedDuration': [this.task.expectedDuration, [Validators.required]],
+        'expectedDuration': [this.task.expectedDuration, [Validators.required, CustomValidators.between(0, 356)]],
         'uid': [this.task.uid]
       });
 

@@ -26,6 +26,7 @@
              [formControl]="taskExpectedDurationControl" required>
 
       <mat-hint *ngIf="taskExpectedDurationControl.hasError('required')" class="be error" align="start">The field is required</mat-hint>
+      <mat-hint *ngIf="taskExpectedDurationControl.hasError('between')" class="be error" align="start">Enter the value between 0 and 356</mat-hint>
     </mat-form-field>
 
     <mat-form-field *ngIf="isEditMode">
