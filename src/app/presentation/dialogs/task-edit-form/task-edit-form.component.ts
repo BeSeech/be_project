@@ -78,8 +78,8 @@ export class TaskEditFormComponent implements OnInit {
 
   collectNewTaskFromFormAndComponent(): TaskModel {
     const task = Object.assign({}, this.task);
-    task.id = this.taskIdControl.value;
-    task.summary = this.taskSummaryControl.value;
+    task.id = this.taskIdControl.value.trim();
+    task.summary = this.taskSummaryControl.value.trim();
     task.expectedDuration = this.taskExpectedDurationControl.value;
     return task;
   }
