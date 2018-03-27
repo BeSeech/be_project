@@ -1,7 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgRedux, NgReduxModule} from '@angular-redux/store';
-
 import {AppComponent} from './app.component';
 import {TaskComponent} from './presentation/task/task.component';
 import {WorkerComponent} from './presentation/worker/worker.component';
@@ -24,6 +23,7 @@ import {TaskEditFormComponent} from './presentation/dialogs/task-edit-form/task-
 import {TaskCrudApi} from './services/restful/taskCrudApi';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import { YesNoDialogComponent } from './presentation/dialogs/yes-no-dialog/yes-no-dialog.component';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -51,7 +51,9 @@ import { YesNoDialogComponent } from './presentation/dialogs/yes-no-dialog/yes-n
     MatGridListModule,
     MatDividerModule,
     MatButtonModule,
-    ShContextMenuModule
+    ShContextMenuModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: CanvasConfig, useClass: CanvasConfig},

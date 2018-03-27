@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+.be.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1.2em;
+  max-height: 1.2em;
+}
+
+.be.error {
+  color: red;
+}
+
+mat-form-field {
+  margin-top: 10px;
+}

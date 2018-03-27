@@ -20,13 +20,6 @@ div.undefined {
   #visibility: hidden;
 }
 
-div.textLenLimit {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 1.1em;
-  max-height: 1.1em;
-}
-
 div.summary {
   position: absolute;
   width: 90%;

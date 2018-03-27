@@ -1,9 +1,9 @@
-.example-form {
+form {
   min-width: 300px;
   width: 100%;
 }
 
-.example-full-width {
+mat-form-field {
   width: 100%;
 }
 
@@ -19,3 +19,5 @@ mat-grid-list {
   margin: auto;
   height: 50px;
 }
+
+

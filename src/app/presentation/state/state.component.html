@@ -1,5 +1,5 @@
 <div class="state" [style.width.px]="position.width" [style.height.px]="position.height" [style.left.px]="position.left">
-  <p class="name" [style.color]="state.color">{{state.name}}</p>
+  <p class="name be label" [style.color]="state.color">{{state.name}}</p>
   <div class="verticalLine" [style.background-color]="state.color"></div>
 
   <worker *ngFor="let w of workers" [worker]="w" [color]="state.color" [columnCount]="state.columnCount"></worker>

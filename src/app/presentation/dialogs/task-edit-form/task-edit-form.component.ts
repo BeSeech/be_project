@@ -1,6 +1,7 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskModel} from '../../../data/model/task/task';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'task-edit-form',
@@ -13,10 +14,11 @@ export class TaskEditFormComponent implements OnInit {
   isEditMode: boolean;
   title: string;
 
-  @ViewChild('taskId') htmlTaskId: ElementRef;
-  @ViewChild('taskSummary') htmlTaskSummary: ElementRef;
-  @ViewChild('taskExpectedDuration') htmlTaskExpectedDuration: ElementRef;
-  @ViewChild('selfUid') htmlTaskUid: ElementRef;
+  form: FormGroup;
+  taskIdControl: AbstractControl;
+  taskSummaryControl: AbstractControl;
+  taskExpectedDurationControl: AbstractControl;
+  taskUidControl: AbstractControl;
 
   static showDialog(dialog: MatDialog, isEditMode: boolean, task: TaskModel): MatDialogRef<TaskEditFormComponent> {
     const dialogRef = dialog.open<TaskEditFormComponent>(TaskEditFormComponent, {
@@ -30,10 +32,24 @@ export class TaskEditFormComponent implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<TaskEditFormComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              fb: FormBuilder) {
     this.task = data.task;
     this.isEditMode = data.isEditMode;
     this.title = this.isEditMode ? 'Edit task' : 'New Task';
+
+    this.form = fb.group(
+      {
+        'id': [this.task.id],
+        'summary': [this.task.summary],
+        'expectedDuration': [this.task.expectedDuration],
+        'uid': [this.task.uid]
+      });
+
+    this.taskIdControl = this.form.controls['id'];
+    this.taskSummaryControl = this.form.controls['summary'];
+    this.taskExpectedDurationControl = this.form.controls['expectedDuration'];
+    this.taskUidControl = this.form.controls['uid'];
   }
 
   onNoClick(): void {
@@ -49,9 +65,9 @@ export class TaskEditFormComponent implements OnInit {
 
   collectNewTaskFromFormAndComponent(): TaskModel {
     const task = Object.assign({}, this.task);
-    task.id = this.htmlTaskId.nativeElement.value;
-    task.summary = this.htmlTaskSummary.nativeElement.value;
-    task.expectedDuration = this.htmlTaskExpectedDuration.nativeElement.value;
+    task.id = this.taskIdControl.value;
+    task.summary = this.taskSummaryControl.value;
+    task.expectedDuration = this.taskExpectedDurationControl.value;
     return task;
   }
 
