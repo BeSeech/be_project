@@ -13,5 +13,5 @@
      [sh-context]="contextMenu.contextMenuItems" [sh-options]="contextMenu.contextMenuOptions" [sh-data-context]="this" (onBeforeMenuOpen)="onBefore($event)">
   <div class="id right be label">{{task.id}}</div>
   <div class="summary be label">{{task.summary}}</div>
-  <div class="estimating right be label">{{getDurationCaption(task.actualDuration)}} / {{getDurationCaption(task.expectedDuration)}}</div>
+  <div class="estimating right be label">{{getDurationCaption()}}</div>
 </div>

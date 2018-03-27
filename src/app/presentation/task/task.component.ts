@@ -81,8 +81,10 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
   }
 
-  getDurationCaption(duration: number): string {
-    return (duration) ? duration.toString() : '?';
+  getDurationCaption(): string {
+    let s = this.task.expectedDuration ? this.task.expectedDuration.toString() : '?';
+    s = this.task.actualDuration ? `${this.task.actualDuration.toString()} / ${s}` : s;
+    return s;
   }
 
 
