@@ -11,7 +11,7 @@
      (click)="select()"
      (dblclick)="editTask(true)"
      [sh-context]="contextMenu.contextMenuItems" [sh-options]="contextMenu.contextMenuOptions" [sh-data-context]="this" (onBeforeMenuOpen)="onBefore($event)">
-  <div class="id right">{{task.id}}</div>
-  <div class="summary">{{task.summary}}</div>
-  <div class="estimating right">{{task.actualDuration}}/{{task.expectedDuration}}</div>
+  <div class="id right textLenLimit">{{task.id}}</div>
+  <div class="summary textLenLimit">{{task.summary}}</div>
+  <div class="estimating right textLenLimit">{{task.actualDuration}}/{{task.expectedDuration}}</div>
 </div>

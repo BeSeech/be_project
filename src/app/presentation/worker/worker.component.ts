@@ -78,4 +78,7 @@ export class WorkerComponent implements OnInit {
     }
   }
 
+  createTask() {
+    alert('AAAA');
+  }
 }
