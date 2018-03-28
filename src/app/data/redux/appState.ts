@@ -98,7 +98,7 @@ export function getInitialState() {
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(2, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
 
-  taskState = createTaskState('State Four', 'skyblue');
+  taskState = createTaskState('State Four', 'blue');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(4, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
   return appState;

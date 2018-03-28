@@ -20,9 +20,12 @@ div.undefined {
   #visibility: hidden;
 }
 
-.drag-target-border {
-  box-shadow: 0px 0px 3px 3px orange;
+div.drag-target-border {
+  #box-shadow: 0px 0px 3px 3px orange;
+  border: 2px dashed blue;
+
 }
+
 
 div.summary {
   position: absolute;
@@ -47,5 +50,14 @@ div.estimating {
   position: absolute;
   right: 1%;
   bottom: 1%;
+}
+
+div.dropInidcator {
+  position: absolute;
+  #background-color: blue;
+}
+
+.drag-hint-border {
+  border: blue dashed 1px;
 }
 

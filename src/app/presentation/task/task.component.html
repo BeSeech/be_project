@@ -1,13 +1,19 @@
-<div *ngIf="!hasTask()"
+<div *ngIf="!hasTask()" class="undefined" id="undefinedTask"
      droppable [dragOverClass]="'drag-target-border'" (onDrop)="onItemDrop($event)"
-     class="undefined" [style.width.px]="width()" [style.height.px]="height()"
+     [style.width.px]="width()" [style.height.px]="height()"
      [style.top.px]="getTop()" [style.left.px]="getLeft()"
      (dblclick)="editTask(false)" >
 
 </div>
 
-<div *ngIf="hasTask()"
-     draggable [dragData]="task"  droppable [dragOverClass]="'drag-target-border'" (onDrop)="onItemDrop($event)"
+<div class="dropInidcator drag-target-border" [style.visibility]="draggedOver() ? 'visible' : 'hidden'"
+     [style.width.px]="4" [style.height.px]="height()"
+     [style.top.px]="getTop()" [style.left.px]="getLeft() - 7">
+
+</div>
+
+<div #Task *ngIf="hasTask()"
+     draggable [dragData]="task"  droppable [dragOverClass]="'drag-target'" (onDrop)="onItemDrop($event)"
      [ngClass]="{'task': true, 'selected': isSelected()}"
      [style.width.px]="width()" [style.height.px]="height()"
      [style.top.px]="getTop()" [style.left.px]="getLeft()"

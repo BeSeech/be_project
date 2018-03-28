@@ -1,4 +1,4 @@
-import {Component, ElementRef, Host, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Host, Input, OnInit, ViewChild} from '@angular/core';
 import {CanvasConfig} from '../canvasConfig';
 import {TaskModel} from '../../data/model/task/task';
 import {AppState} from '../../data/redux/appState';
@@ -7,7 +7,6 @@ import {TaskActions} from '../../data/redux/actions/taskActions';
 import {MatDialog} from '@angular/material';
 import {TaskEditFormComponent} from '../dialogs/task-edit-form/task-edit-form.component';
 import {TaskCrudApi} from '../../services/restful/taskCrudApi';
-import {MatDialogRef} from '@angular/material/dialog/typings/dialog-ref';
 import {WorkerComponent} from '../worker/worker.component';
 import {ContainerManager} from '../../data/model/helpers/containerManager';
 import {BeforeMenuEvent, IShContextMenuItem, IShContextOptions} from 'ng2-right-click-menu';
@@ -26,14 +25,22 @@ export class TaskComponent implements OnInit {
   @Input() public row: number;
   @Input() public column: number;
   @Input() public hostUid: string;
+  @ViewChild('Task') public htmlTask: ElementRef;
+
   public contextMenu: TaskContextMenu = new TaskContextMenu();
+
+  public draggedOver(): boolean {
+    return (this.htmlTask && this.htmlTask.nativeElement.classList.contains('drag-target') );
+  }
+
 
   public onBefore = (event: BeforeMenuEvent) => {
     if (!this.isSelected()) {
       this.select();
     }
     event.open();
-  };
+  }
+
 
   public isSelected(): boolean {
     return (this.task.uid === this.ngRedux.getState().selectedTaskUid);
@@ -94,7 +101,11 @@ export class TaskComponent implements OnInit {
   }
 
   getLeft(): number {
-    return +this.canvasConfig.taskGap + this.column * (this.canvasConfig.taskWidth + +this.canvasConfig.taskGap);
+    return this.getOffset() + this.canvasConfig.taskGap + this.column * (this.canvasConfig.taskWidth + this.canvasConfig.taskGap);
+  }
+
+  getOffset(): number {
+    return this.draggedOver() ? 0 : 0;
   }
 
   createDefaultTask(): TaskModel {
