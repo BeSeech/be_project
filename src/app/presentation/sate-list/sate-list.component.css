@@ -1,0 +1,17 @@
+div.tasksContainer {
+  border: 1px dashed red;
+  position: relative;
+  min-height: 300px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
+
+}
+
+div.taskCanvas {
+  position: relative;
+}
+

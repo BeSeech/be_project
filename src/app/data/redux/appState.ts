@@ -81,6 +81,8 @@ export function getInitialState() {
   worker.tasks.push(ContainerManager.getElementByIndex<TaskModel>(4, appState.tasks).uid);
   ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
 
+  worker = createWorker('Worker Five', 2, 4);
+  ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
 
   // States
   let taskState: TaskStateModel = createTaskState('State One', 'red');
@@ -94,6 +96,10 @@ export function getInitialState() {
 
   taskState = createTaskState('State Three', 'black');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(2, appState.workers).uid);
+  ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
+
+  taskState = createTaskState('State Four', 'skyblue');
+  taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(4, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
   return appState;
 }

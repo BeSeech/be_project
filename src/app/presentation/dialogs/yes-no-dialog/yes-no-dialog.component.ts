@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Injectable, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskEditFormComponent} from '../task-edit-form/task-edit-form.component';
 
@@ -7,6 +7,7 @@ import {TaskEditFormComponent} from '../task-edit-form/task-edit-form.component'
   templateUrl: './yes-no-dialog.component.html',
   styleUrls: ['./yes-no-dialog.component.css']
 })
+
 export class YesNoDialogComponent implements OnInit {
 
   title: string;

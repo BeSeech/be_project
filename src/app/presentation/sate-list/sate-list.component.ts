@@ -4,7 +4,6 @@ import {NgRedux} from '@angular-redux/store';
 import {AppState} from '../../data/redux/appState';
 import {ContainerManager} from '../../data/model/helpers/containerManager';
 import {CanvasConfig} from '../canvasConfig';
-import index from '@angular/cli/lib/cli';
 import {ElementPosition} from '../helpers/elementPosition';
 import {WorkerModel} from '../../data/model/worker/worker';
 
@@ -17,6 +16,11 @@ export class SateListComponent implements OnInit {
 
   states: Array<TaskStateModel>;
   private elementsPosition: Array<ElementPosition>;
+  height: number;
+  width: number;
+  get windowHeight(): number {
+    return window.innerHeight;
+  }
 
   constructor(private ngRedux: NgRedux<AppState>, private canvasConfig: CanvasConfig) {
   }
@@ -47,6 +51,8 @@ export class SateListComponent implements OnInit {
     for (let i = 0; i < this.elementsPosition.length; i++) {
       this.elementsPosition[i].height = maxHeight;
     }
+    this.width = lastLeftPos;
+    this.height = maxHeight;
   }
 
   ngOnInit() {

@@ -22,8 +22,10 @@ import {
 import {TaskEditFormComponent} from './presentation/dialogs/task-edit-form/task-edit-form.component';
 import {TaskCrudApi} from './services/restful/taskCrudApi';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
-import { YesNoDialogComponent } from './presentation/dialogs/yes-no-dialog/yes-no-dialog.component';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {YesNoDialogComponent} from './presentation/dialogs/yes-no-dialog/yes-no-dialog.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgDragDropModule} from 'ng-drag-drop';
+import { ScrolledDragAreaDirective } from './presentation/directives/scrolled-drag-area/scrolled-drag-area.directive';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
     StateComponent,
     SateListComponent,
     TaskEditFormComponent,
-    YesNoDialogComponent
+    YesNoDialogComponent,
+    ScrolledDragAreaDirective
   ],
   entryComponents: [
     TaskEditFormComponent,
@@ -53,7 +56,8 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatButtonModule,
     ShContextMenuModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgDragDropModule.forRoot()
   ],
   providers: [
     {provide: CanvasConfig, useClass: CanvasConfig},
@@ -61,6 +65,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   constructor(ngRedux: NgRedux<AppState>) {
     ngRedux.configureStore(taskReducer, getInitialState());

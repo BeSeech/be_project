@@ -13,6 +13,7 @@ import {ContainerManager} from '../../data/model/helpers/containerManager';
 import {BeforeMenuEvent, IShContextMenuItem, IShContextOptions} from 'ng2-right-click-menu';
 import {TaskContextMenu} from '../dialogs/taskContextMenu';
 import {YesNoDialogComponent} from '../dialogs/yes-no-dialog/yes-no-dialog.component';
+import {DropEvent} from 'ng-drag-drop';
 
 @Component({
   selector: 'task',
@@ -146,5 +147,9 @@ export class TaskComponent implements OnInit {
         });
       }
     });
+  }
+
+  onItemDrop($event: DropEvent) {
+    console.log(`Task ${$event.dragData.uid} was dropped`);
   }
 }

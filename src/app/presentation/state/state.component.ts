@@ -18,6 +18,8 @@ export class StateComponent implements OnInit {
 
   @Input() public state: TaskStateModel;
   @Input() public position: ElementPosition;
+  @Input() public stateListHeight: number;
+
 
   workers: Array<WorkerModel> = [];
 

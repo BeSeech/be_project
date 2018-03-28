@@ -1,5 +1,5 @@
-<div class="tasks">
-
-  <state *ngFor="let s of states; let i = index" [state]="s" [position]="getStateLeftPositionByIndex(i)"></state>
-
+<div class="tasksContainer" scrolled-drag-area [style.height.px]="windowHeight">
+  <div class="taskCanvas" [style.min-height.px]="height" [style.min-width.px]="width">
+     <state *ngFor="let s of states; let i = index" [state]="s" [position]="getStateLeftPositionByIndex(i)"></state>
+  </div>
 </div>
