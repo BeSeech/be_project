@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {TaskStateContainer} from '../../../data/model/state/taskStateContainer';
 import {NgRedux} from '@angular-redux/store';
 import {AppState} from '../../../data/redux/appState';
@@ -8,6 +8,10 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskModel} from '../../../data/model/task/task';
 import {StateInEditFormActions} from '../../../data/redux/actions/editStateFormActions';
 import {Api} from '../../../services/restful/api';
+import {WaitingIndicatorComponent} from '../../waiting-indicator/waiting-indicator.component';
+import {YesNoDialogComponent} from '../yes-no-dialog/yes-no-dialog.component';
+import {TaskActions} from '../../../data/redux/actions/taskActions';
+import {OnStateMovedEvent} from '../../helpers/onStateMovedEvent';
 
 @Component({
   selector: 'states-edit-form',
@@ -16,6 +20,9 @@ import {Api} from '../../../services/restful/api';
 })
 export class StatesEditFormComponent implements OnInit {
   states: TaskStateContainer;
+
+  isWaiting: boolean;
+
 
   static showDialog(dialog: MatDialog, states: TaskStateContainer): MatDialogRef<StatesEditFormComponent> {
     const dialogRef = dialog.open<StatesEditFormComponent>(StatesEditFormComponent, {
@@ -36,10 +43,49 @@ export class StatesEditFormComponent implements OnInit {
     return ContainerManager.getElementByIndex<TaskStateModel>(index, this.states);
   }
 
+  get windowHeight(): number {
+    return window.innerHeight;
+  }
+
+
   addState(): void {
-    this.api.guid.getGuid().subscribe( uid => {
-      alert(uid);
+    this.isWaiting = true;
+    this.api.guid.getGuid().subscribe(uid => {
+      this.isWaiting = false;
+      const newState: TaskStateModel = new TaskStateModel();
+      newState.color = 'black';
+      newState.name = 'State ' + this.states.elementsSequence.length;
+      newState.uid = <string>uid;
+      newState.columnCount = 2;
+      ContainerManager.AppendElement<TaskStateModel>(newState, this.states);
     });
+  }
+
+  deleteSelectedState() {
+    const stateToDelete: TaskStateModel = this.getSelectedState();
+    if (!stateToDelete) {
+      return;
+    }
+    const dialogRef = YesNoDialogComponent.showDialog(
+      this.dialog, 'Confirmation dialog', `Do you really want to delete the state: "${stateToDelete.name}"?`);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      ContainerManager.DeleteElement<TaskStateModel>(this.getSelectedState(), this.states);
+      this.ngRedux.dispatch(StateInEditFormActions.selectTask(-1));
+    });
+  }
+
+  moveStateItem($event: OnStateMovedEvent) {
+    if ($event.oldPosition === $event.newPosition) {
+      return;
+    }
+    const movedState: TaskStateModel = ContainerManager.getElementByUid<TaskStateModel>($event.movedStateUid, this.states);
+    ContainerManager.DeleteElement<TaskStateModel>(movedState, this.states);
+    const newPosition: number = ($event.newPosition < $event.oldPosition) ? $event.newPosition : $event.newPosition - 1;
+    ContainerManager.InsertElement<TaskStateModel>(movedState, newPosition, this.states);
   }
 
   getState(uid: string): TaskStateModel {
@@ -49,12 +95,14 @@ export class StatesEditFormComponent implements OnInit {
   constructor(private api: Api,
               public dialogRef: MatDialogRef<StatesEditFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
+              public dialog: MatDialog,
               private ngRedux: NgRedux<AppState>) {
     this.ngRedux.dispatch(StateInEditFormActions.selectTask(-1));
     this.states = data.states;
   }
 
   ngOnInit() {
+    this.isWaiting = false;
   }
 
 }

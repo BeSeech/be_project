@@ -13,7 +13,7 @@
 </div>
 
 <div #Task *ngIf="hasTask()"
-     draggable  dragData="getDragInfo()" (onDragStart)="select()"
+     draggable  [dragData]="getDragInfo()" (onDragStart)="select()"
      droppable [dragOverClass]="'drag-target'" (onDrop)="onItemDrop($event)"
      [ngClass]="{'task': true, 'selected': isSelected()}"
      [style.width.px]="width()" [style.height.px]="height()"

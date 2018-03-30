@@ -1,18 +1,21 @@
-<div class="main">
+<div class="main" >
+  <waiting-indicator [visible]="isWaiting"></waiting-indicator>
   <div class="states">
     <h3>State list:</h3>
     <mat-divider></mat-divider>
     <mat-grid-list cols="3">
       <button mat-button (click)="addState()">Add</button>
-      <button mat-button [disabled]="!isThereSelectedState()">Delete</button>
+      <button mat-button (click)="deleteSelectedState()" [disabled]="!isThereSelectedState()">Delete</button>
       <button mat-button [disabled]="!isThereSelectedState()">Edit</button>
     </mat-grid-list>
     <mat-divider></mat-divider>
-    <mat-list class="be scrollContainer stateList">
-      <mat-list-item *ngFor="let s of states.elementsSequence; let i = index">
-        <state-list-item [state]="getState(s)" [index]="i"></state-list-item>
-      </mat-list-item>
-    </mat-list>
+    <div class="be scrollContainer stateList" scrolled-drag-area [style.height.px]="windowHeight / 2">
+      <mat-list>
+        <mat-list-item *ngFor="let s of states.elementsSequence; let i = index">
+          <state-list-item (stateMoved)="moveStateItem($event)" [state]="getState(s)" [index]="i"></state-list-item>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </div>
 
   <mat-divider [vertical]="true"></mat-divider>

@@ -1,6 +1,7 @@
 div.main {
   width: auto;
   min-width: 300px;
+  margin-top: 3px;
 }
 
 div.uid {
@@ -39,3 +40,12 @@ mat-divider {
   width: 320px;
   margin: auto;
 }
+
+.drag-border {
+  opacity: 0.2;
+}
+
+.drag-target {
+  border-top: 2px dashed blue;
+}
+

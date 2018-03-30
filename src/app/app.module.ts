@@ -19,7 +19,8 @@ import {
   MatDividerModule,
   MatButtonModule,
   MatListModule,
-  MatIconModule
+  MatIconModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import {TaskEditFormComponent} from './presentation/dialogs/task-edit-form/task-edit-form.component';
 import {TasksCrudApi} from './services/restful/tasksCrudApi';
@@ -35,6 +36,7 @@ import { StateListItemComponent } from './presentation/dialogs/states-edit-form/
 import {ApiContext} from './services/restful/helpers/ApiContext';
 import {ApiCredentials} from './services/restful/helpers/Credentials';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { WaitingIndicatorComponent } from './presentation/waiting-indicator/waiting-indicator.component';
 
 
 @NgModule({
@@ -49,7 +51,8 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
     ScrolledDragAreaDirective,
     SseViewComponent,
     StatesEditFormComponent,
-    StateListItemComponent
+    StateListItemComponent,
+    WaitingIndicatorComponent
   ],
   entryComponents: [
     TaskEditFormComponent,
@@ -70,6 +73,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
     MatButtonModule,
     MatListModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     ShContextMenuModule,
     FormsModule,
     ReactiveFormsModule,

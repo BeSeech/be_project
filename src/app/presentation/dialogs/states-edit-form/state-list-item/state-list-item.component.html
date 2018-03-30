@@ -1,4 +1,6 @@
-<div class="main not-selectable">
+<div class="main not-selectable"
+     draggable  [dragData]="getDragInfo()" (onDragStart)="select()"
+     droppable [dragOverClass]="'drag-target'" [dragHintClass]="'drag-state-hint'" (onDrop)="onItemDrop($event)">
   <div
     [ngClass]="{'item': true, 'selected': isSelected()}"
     (click)="select()">

@@ -9,7 +9,7 @@
   color: red;
 }
 
-div.be.scrollContainer {
+.be.scrollContainer {
   overflow: scroll;
   overflow-x: auto;
   overflow-y: auto;
