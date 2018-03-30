@@ -12,6 +12,7 @@ import {WaitingIndicatorComponent} from '../../waiting-indicator/waiting-indicat
 import {YesNoDialogComponent} from '../yes-no-dialog/yes-no-dialog.component';
 import {TaskActions} from '../../../data/redux/actions/taskActions';
 import {OnStateMovedEvent} from '../../helpers/onStateMovedEvent';
+import {StateEditFormComponent} from '../state-edit-form/state-edit-form.component';
 
 @Component({
   selector: 'states-edit-form',
@@ -43,11 +44,6 @@ export class StatesEditFormComponent implements OnInit {
     return ContainerManager.getElementByIndex<TaskStateModel>(index, this.states);
   }
 
-  get windowHeight(): number {
-    return window.innerHeight;
-  }
-
-
   addState(): void {
     this.isWaiting = true;
     this.api.guid.getGuid().subscribe(uid => {
@@ -59,6 +55,27 @@ export class StatesEditFormComponent implements OnInit {
       newState.columnCount = 2;
       ContainerManager.AppendElement<TaskStateModel>(newState, this.states);
     });
+  }
+
+  editState() {
+    const stateToEdit: TaskStateModel = this.getSelectedState();
+    if (!stateToEdit) {
+      return;
+    }
+
+    const dialogRef = StateEditFormComponent.showDialog(
+      this.dialog, stateToEdit, true);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      const newState = <TaskStateModel>result;
+      const statePosition = ContainerManager.GetElementIndexByUid<TaskStateModel>(stateToEdit.uid, this.states);
+      ContainerManager.DeleteElement<TaskStateModel>(stateToEdit, this.states);
+      ContainerManager.InsertElement<TaskStateModel>(newState, statePosition, this.states);
+    });
+
   }
 
   deleteSelectedState() {
@@ -90,6 +107,10 @@ export class StatesEditFormComponent implements OnInit {
 
   getState(uid: string): TaskStateModel {
     return ContainerManager.getElementByUid<TaskStateModel>(uid, this.states);
+  }
+
+  get windowHeight(): number {
+    return window.innerHeight;
   }
 
   constructor(private api: Api,

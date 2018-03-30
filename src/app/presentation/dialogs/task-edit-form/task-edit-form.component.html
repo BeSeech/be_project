@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{title}}</h2>
 
 <mat-dialog-content>
-  <form [formGroup]="form" (dblclick)="getFormValidationErrors()">
+  <form [formGroup]="form">
     <mat-form-field>
       <input matInput id="taskId" name="taskId" placeholder="Id" #taskId
              [formControl]="taskIdControl" required>

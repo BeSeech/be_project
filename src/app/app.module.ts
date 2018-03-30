@@ -37,6 +37,7 @@ import {ApiContext} from './services/restful/helpers/ApiContext';
 import {ApiCredentials} from './services/restful/helpers/Credentials';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { WaitingIndicatorComponent } from './presentation/waiting-indicator/waiting-indicator.component';
+import { StateEditFormComponent } from './presentation/dialogs/state-edit-form/state-edit-form.component';
 
 
 @NgModule({
@@ -52,12 +53,15 @@ import { WaitingIndicatorComponent } from './presentation/waiting-indicator/wait
     SseViewComponent,
     StatesEditFormComponent,
     StateListItemComponent,
-    WaitingIndicatorComponent
+    WaitingIndicatorComponent,
+    StateEditFormComponent
   ],
   entryComponents: [
+    StateEditFormComponent,
     TaskEditFormComponent,
     YesNoDialogComponent,
-    StatesEditFormComponent
+    StatesEditFormComponent,
+    StateEditFormComponent
   ],
   imports: [
     BrowserModule,

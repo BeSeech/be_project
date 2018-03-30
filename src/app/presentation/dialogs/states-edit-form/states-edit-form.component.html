@@ -6,7 +6,7 @@
     <mat-grid-list cols="3">
       <button mat-button (click)="addState()">Add</button>
       <button mat-button (click)="deleteSelectedState()" [disabled]="!isThereSelectedState()">Delete</button>
-      <button mat-button [disabled]="!isThereSelectedState()">Edit</button>
+      <button mat-button (click)="editState()" [disabled]="!isThereSelectedState()">Edit</button>
     </mat-grid-list>
     <mat-divider></mat-divider>
     <div class="be scrollContainer stateList" scrolled-drag-area [style.height.px]="windowHeight / 2">
