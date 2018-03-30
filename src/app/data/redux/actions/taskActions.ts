@@ -7,13 +7,13 @@ export const SELECT_TASK = 'SELECT_TASK';
 export const ADD_TASK = 'ADD_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
+export const MOVE_TASK = 'MOVE_TASK';
 // endregion
 
 // region interfaces
 export interface SelectTaskAction extends Action {
   selfUid: string;
 }
-
 
 export interface AddTaskAction extends Action {
   task: TaskModel;
@@ -29,6 +29,12 @@ export interface UpdateTaskAction extends Action {
   task: TaskModel;
 }
 
+export interface MoveTaskAction extends Action {
+  hostUid: string;
+  targetUid: string;
+  taskUid: string;
+  newPosition: number;
+}
 // endregion
 
 // region action creator
@@ -63,6 +69,15 @@ export class TaskActions {
     };
   }
 
+  static moveTask(newPosition: number, hostUid: string, targetUid: string, taskUid: string): MoveTaskAction {
+    return {
+      type: MOVE_TASK,
+      taskUid: taskUid,
+      hostUid: hostUid,
+      targetUid: targetUid,
+      newPosition: newPosition
+    };
+  }
 }
 
 // endregion

@@ -17,15 +17,24 @@ import {
   MatInputModule,
   MatGridListModule,
   MatDividerModule,
-  MatButtonModule
+  MatButtonModule,
+  MatListModule,
+  MatIconModule
 } from '@angular/material';
 import {TaskEditFormComponent} from './presentation/dialogs/task-edit-form/task-edit-form.component';
-import {TaskCrudApi} from './services/restful/taskCrudApi';
+import {TasksCrudApi} from './services/restful/tasksCrudApi';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {YesNoDialogComponent} from './presentation/dialogs/yes-no-dialog/yes-no-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgDragDropModule} from 'ng-drag-drop';
-import { ScrolledDragAreaDirective } from './presentation/directives/scrolled-drag-area/scrolled-drag-area.directive';
+import {ScrolledDragAreaDirective} from './presentation/directives/scrolled-drag-area/scrolled-drag-area.directive';
+import {Api} from './services/restful/api';
+import {SseViewComponent} from './presentation/sse-view/sse-view.component';
+import {StatesEditFormComponent} from './presentation/dialogs/states-edit-form/states-edit-form.component';
+import { StateListItemComponent } from './presentation/dialogs/states-edit-form/state-list-item/state-list-item.component';
+import {ApiContext} from './services/restful/helpers/ApiContext';
+import {ApiCredentials} from './services/restful/helpers/Credentials';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -37,15 +46,20 @@ import { ScrolledDragAreaDirective } from './presentation/directives/scrolled-dr
     SateListComponent,
     TaskEditFormComponent,
     YesNoDialogComponent,
-    ScrolledDragAreaDirective
+    ScrolledDragAreaDirective,
+    SseViewComponent,
+    StatesEditFormComponent,
+    StateListItemComponent
   ],
   entryComponents: [
     TaskEditFormComponent,
-    YesNoDialogComponent
+    YesNoDialogComponent,
+    StatesEditFormComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NgReduxModule,
     MatTooltipModule,
     MatDialogModule,
@@ -54,14 +68,23 @@ import { ScrolledDragAreaDirective } from './presentation/directives/scrolled-dr
     MatGridListModule,
     MatDividerModule,
     MatButtonModule,
+    MatListModule,
+    MatIconModule,
     ShContextMenuModule,
     FormsModule,
     ReactiveFormsModule,
     NgDragDropModule.forRoot()
   ],
   providers: [
+    {provide: ApiCredentials, useClass: ApiCredentials},
+    {provide: ApiContext, useClass: ApiContext},
     {provide: CanvasConfig, useClass: CanvasConfig},
-    {provide: TaskCrudApi, useClass: TaskCrudApi}
+    {
+      provide: Api, deps: [HttpClient, ApiContext, ApiCredentials],
+      useFactory(http: HttpClient, context: ApiContext, credentials: ApiCredentials) {
+        return new Api(http, context, credentials);
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })

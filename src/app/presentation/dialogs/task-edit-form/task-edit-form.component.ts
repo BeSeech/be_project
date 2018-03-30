@@ -3,6 +3,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TaskModel} from '../../../data/model/task/task';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {CustomValidators} from '../../validators/customValidators';
+import {YesNoDialogComponent} from '../yes-no-dialog/yes-no-dialog.component';
+import {TaskActions} from '../../../data/redux/actions/taskActions';
 
 @Component({
   selector: 'task-edit-form',
@@ -63,14 +65,6 @@ export class TaskEditFormComponent implements OnInit {
     this.taskSummaryControl = this.form.controls['summary'];
     this.taskExpectedDurationControl = this.form.controls['expectedDuration'];
     this.taskUidControl = this.form.controls['uid'];
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onYesClick(): void {
-    this.dialogRef.close(this.collectNewTaskFromFormAndComponent());
   }
 
   ngOnInit() {

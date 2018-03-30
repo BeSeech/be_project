@@ -8,6 +8,8 @@ import {AppState} from '../../data/redux/appState';
 import {NgRedux} from '@angular-redux/store';
 import {CanvasConfig} from '../canvasConfig';
 import {ElementPosition} from '../helpers/elementPosition';
+import {MatDialog} from '@angular/material';
+import {StatesEditFormComponent} from '../dialogs/states-edit-form/states-edit-form.component';
 
 @Component({
   selector: 'state',
@@ -31,7 +33,12 @@ export class StateComponent implements OnInit {
     }
   }
 
-  constructor(private ngRedux: NgRedux<AppState>, private canvasConfig: CanvasConfig) { }
+  constructor(private ngRedux: NgRedux<AppState>,
+              private canvasConfig: CanvasConfig,
+              public dialog: MatDialog) {
+  }
 
-
+  editStates() {
+    StatesEditFormComponent.showDialog(this.dialog, this.ngRedux.getState().states);
+  }
 }

@@ -2,7 +2,7 @@
   <div class="horLine" [style.background-color]="color"></div>
   <div class="name be label" [style.color]="color">{{worker.name}}</div>
   <div class="tasks">
-    <task *ngFor="let item of this.items" [row]="item.r" [column]="item.c" [task]="getTask(item.r, item.c)"></task>
+    <task *ngFor="let item of this.items" [taskIndex]="getIndexByRowColumn(item.r, item.c)" [row]="item.r" [column]="item.c" [task]="getTask(item.r, item.c)"></task>
   </div>
 </div>
 

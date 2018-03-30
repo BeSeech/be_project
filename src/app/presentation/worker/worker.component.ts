@@ -48,7 +48,7 @@ export class WorkerComponent implements OnInit {
     this.worker = ContainerManager.getElementByUid<WorkerModel>(this.worker.uid, this.ngRedux.getState().workers);
   }
 
-  private getIndexByRowColumn(row: number, column: number): number {
+  public getIndexByRowColumn(row: number, column: number): number {
     return row * this.columnCount + column;
   }
 

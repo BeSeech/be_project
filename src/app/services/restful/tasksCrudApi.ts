@@ -3,7 +3,7 @@ import {Guid} from 'guid-typescript';
 import {Observable} from 'rxjs/Observable';
 import { of as observableOf} from 'rxjs/observable/of';
 
-export class TaskCrudApi {
+export class TasksCrudApi {
 
   postTask(hostUid: string, task: TaskModel): Observable<TaskModel> {
     task.uid = Guid.create().toString();

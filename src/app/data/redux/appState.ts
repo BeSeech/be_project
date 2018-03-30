@@ -7,9 +7,11 @@ import {UidArray} from '../model/helpers/uidArray';
 import {ContainerManager} from '../model/helpers/containerManager';
 import {WorkerModel} from '../model/worker/worker';
 import {TaskModel} from '../model/task/task';
+import {PresentationState} from '../model/presentationState';
 
 export class AppState {
   selectedTaskUid: string;
+  presentation: PresentationState;
   states: TaskStateContainer;
   workers: WorkerContainer;
   tasks: TaskContainer;
@@ -49,11 +51,14 @@ export function getInitialState() {
   const appState: AppState = new AppState();
   appState.selectedTaskUid = '';
 
+  appState.presentation = new PresentationState();
+  appState.presentation.editFormSelectedStateIndex = -1;
+
   appState.states = new TaskStateContainer();
   appState.workers = new WorkerContainer();
   appState.tasks = new TaskContainer();
 
-  // Tasks
+  // TasksApi
   ContainerManager.AppendElement<TaskModel>(createTask('Task 1'), appState.tasks);
   ContainerManager.AppendElement<TaskModel>(createTask('Task 2'), appState.tasks);
   ContainerManager.AppendElement<TaskModel>(createTask('Task 3'), appState.tasks);
