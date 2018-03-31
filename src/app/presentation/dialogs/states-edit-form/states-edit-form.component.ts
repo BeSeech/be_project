@@ -20,6 +20,7 @@ import {StateEditFormComponent} from '../state-edit-form/state-edit-form.compone
   styleUrls: ['./states-edit-form.component.css']
 })
 export class StatesEditFormComponent implements OnInit {
+  isDragMode: boolean;
   states: TaskStateContainer;
 
   isWaiting: boolean;
@@ -113,7 +114,8 @@ export class StatesEditFormComponent implements OnInit {
     }
     const movedState: TaskStateModel = ContainerManager.getElementByUid<TaskStateModel>($event.movedStateUid, this.states);
     ContainerManager.DeleteElement<TaskStateModel>(movedState, this.states);
-    const newPosition: number = ($event.newPosition < $event.oldPosition) ? $event.newPosition : $event.newPosition - 1;
+    let newPosition: number = ($event.newPosition < $event.oldPosition) ? $event.newPosition : $event.newPosition - 1;
+    newPosition = $event.newPosition !== -1 ? newPosition : ContainerManager.getElementsCount(this.states);
     ContainerManager.InsertElement<TaskStateModel>(movedState, newPosition, this.states);
   }
 
@@ -136,6 +138,10 @@ export class StatesEditFormComponent implements OnInit {
 
   ngOnInit() {
     this.isWaiting = false;
+    this.isDragMode = false;
   }
 
+  setDragState($event: boolean) {
+    this.isDragMode = $event;
+  }
 }

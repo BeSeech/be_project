@@ -1,0 +1,11 @@
+.fake {
+  width: 300px;
+  height: 20px;
+  min-height: 20px;
+  #border: 1px solid red;
+  #background-color: orange;
+}
+
+.drag-target {
+  border-top: 2px dashed blue;
+}

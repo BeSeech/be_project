@@ -39,6 +39,7 @@ import {ApiCredentials} from './services/restful/helpers/Credentials';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { WaitingIndicatorComponent } from './presentation/waiting-indicator/waiting-indicator.component';
 import { StateEditFormComponent } from './presentation/dialogs/state-edit-form/state-edit-form.component';
+import { FakeDropItemComponent } from './presentation/helpers/fake-drop-item/fake-drop-item.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { StateEditFormComponent } from './presentation/dialogs/state-edit-form/s
     StatesEditFormComponent,
     StateListItemComponent,
     WaitingIndicatorComponent,
-    StateEditFormComponent
+    StateEditFormComponent,
+    FakeDropItemComponent
   ],
   entryComponents: [
     StateEditFormComponent,

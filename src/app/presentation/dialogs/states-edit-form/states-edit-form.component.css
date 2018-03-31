@@ -22,3 +22,7 @@ mat-grid-list {
   max-width: 300px;
   margin: auto;
 }
+
+mat-list-item {
+  width: 100%;
+}

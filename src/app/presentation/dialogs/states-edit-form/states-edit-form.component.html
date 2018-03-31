@@ -1,4 +1,4 @@
-<div class="main" >
+<div class="main">
   <waiting-indicator [visible]="isWaiting"></waiting-indicator>
   <div class="states">
     <h3>State list:</h3>
@@ -12,7 +12,11 @@
     <div class="be scrollContainer stateList" scrolled-drag-area [style.height.px]="windowHeight / 2">
       <mat-list>
         <mat-list-item *ngFor="let s of states.elementsSequence; let i = index">
-          <state-list-item (stateMoved)="moveStateItem($event)" [state]="getState(s)" [index]="i"></state-list-item>
+          <state-list-item (dragStateChange)="setDragState($event)" (stateMoved)="moveStateItem($event)"
+                           [state]="getState(s)" [index]="i"></state-list-item>
+        </mat-list-item>
+        <mat-list-item>
+          <fake-drop-item [visible]="isDragMode" (stateMoved)="moveStateItem($event)"></fake-drop-item>
         </mat-list-item>
       </mat-list>
     </div>
