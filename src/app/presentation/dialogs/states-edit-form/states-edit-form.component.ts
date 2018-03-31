@@ -5,12 +5,9 @@ import {AppState} from '../../../data/redux/appState';
 import {TaskStateModel} from '../../../data/model/state/taskState';
 import {ContainerManager} from '../../../data/model/helpers/containerManager';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {TaskModel} from '../../../data/model/task/task';
 import {StateInEditFormActions} from '../../../data/redux/actions/editStateFormActions';
 import {Api} from '../../../services/restful/api';
-import {WaitingIndicatorComponent} from '../../waiting-indicator/waiting-indicator.component';
 import {YesNoDialogComponent} from '../yes-no-dialog/yes-no-dialog.component';
-import {TaskActions} from '../../../data/redux/actions/taskActions';
 import {OnStateMovedEvent} from '../../helpers/onStateMovedEvent';
 import {StateEditFormComponent} from '../state-edit-form/state-edit-form.component';
 
@@ -28,7 +25,7 @@ export class StatesEditFormComponent implements OnInit {
 
   static showDialog(dialog: MatDialog, states: TaskStateContainer): MatDialogRef<StatesEditFormComponent> {
     const dialogRef = dialog.open<StatesEditFormComponent>(StatesEditFormComponent, {
-      width: '700px',
+      width: '400px',
       data: {
         states: Object.assign({}, states),
       }
