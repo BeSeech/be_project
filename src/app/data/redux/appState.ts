@@ -90,20 +90,20 @@ export function getInitialState() {
   ContainerManager.AppendElement<WorkerModel>(worker, appState.workers);
 
   // States
-  let taskState: TaskStateModel = createTaskState('State One', 'red');
+  let taskState: TaskStateModel = createTaskState('State One', '#FF0000');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(0, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
 
-  taskState = createTaskState('State Two', 'green');
+  taskState = createTaskState('State Two', '#008000');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(1, appState.workers).uid);
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(3, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
 
-  taskState = createTaskState('State Three', 'black');
+  taskState = createTaskState('State Three', '#000000');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(2, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
 
-  taskState = createTaskState('State Four', 'blue');
+  taskState = createTaskState('State Four', '#0000FF');
   taskState.workers.push(ContainerManager.getElementByIndex<WorkerModel>(4, appState.workers).uid);
   ContainerManager.AppendElement<TaskStateModel>(taskState, appState.states);
   return appState;

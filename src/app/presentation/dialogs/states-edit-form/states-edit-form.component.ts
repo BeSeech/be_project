@@ -25,7 +25,7 @@ export class StatesEditFormComponent implements OnInit {
 
   static showDialog(dialog: MatDialog, states: TaskStateContainer): MatDialogRef<StatesEditFormComponent> {
     const dialogRef = dialog.open<StatesEditFormComponent>(StatesEditFormComponent, {
-      width: '400px',
+      width: '374px',
       data: {
         states: Object.assign({}, states),
       }
@@ -48,7 +48,7 @@ export class StatesEditFormComponent implements OnInit {
     this.api.guid.getGuid().subscribe(uid => {
       this.isWaiting = false;
       const state: TaskStateModel = new TaskStateModel();
-      state.color = 'black';
+      state.color = '#000000';
       state.name = 'State ' + (this.states.elementsSequence.length + 1);
       state.uid = <string>uid;
       state.columnCount = 2;

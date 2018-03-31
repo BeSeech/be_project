@@ -4,8 +4,17 @@ form {
 }
 
 mat-form-field {
+  width: 40%;
+}
+
+.right {
+  margin-left: 18%;
+}
+
+mat-form-field.wide {
   width: 100%;
 }
+
 
 button {
   width: 40%;

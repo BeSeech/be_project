@@ -22,16 +22,10 @@ export class StateEditFormComponent implements OnInit {
   stateColumnCountControl: AbstractControl;
   stateColorControl: AbstractControl;
   stateUidControl: AbstractControl;
-  colors = [
-    {value: 'black', viewValue: 'black'},
-    {value: 'blue', viewValue: 'blue'},
-    {value: 'green', viewValue: 'green'},
-    {value: 'red', viewValue: 'red'}
-  ];
 
   static showDialog(dialog: MatDialog, state: TaskStateModel, isEditMode: boolean): MatDialogRef<StateEditFormComponent> {
     const dialogRef = dialog.open<StateEditFormComponent>(StateEditFormComponent, {
-      width: '700px',
+      width: '400px',
       data: {
         state: Object.assign({}, state),
         isEditMode: isEditMode
@@ -75,7 +69,8 @@ export class StateEditFormComponent implements OnInit {
     const state = Object.assign({}, this.state);
     state.name = this.stateNameControl.value.trim();
     state.columnCount = this.stateColumnCountControl.value;
-    state.color = this.stateColorControl.value.trim();
+    state.color = this.stateColorControl.value;
+    console.log(`state.color: "${state.color}"`);
     return state;
   }
 
