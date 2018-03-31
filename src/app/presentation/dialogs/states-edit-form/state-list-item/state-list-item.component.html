@@ -4,6 +4,7 @@
   <div
     [ngClass]="{'item': true, 'selected': isSelected()}"
     (click)="select()">
+
     <div class="stateIndex">
         {{index + 1}}:
     </div>
@@ -11,5 +12,6 @@
       <div class="name be label" [style.color]="state.color">{{state.name}}</div>
       <div class="uid be label">{{state.uid}}</div>
     </div>
+
   </div>
 </div>

@@ -20,7 +20,8 @@ import {
   MatButtonModule,
   MatListModule,
   MatIconModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSelectModule
 } from '@angular/material';
 import {TaskEditFormComponent} from './presentation/dialogs/task-edit-form/task-edit-form.component';
 import {TasksCrudApi} from './services/restful/tasksCrudApi';
@@ -78,6 +79,7 @@ import { StateEditFormComponent } from './presentation/dialogs/state-edit-form/s
     MatListModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     ShContextMenuModule,
     FormsModule,
     ReactiveFormsModule,

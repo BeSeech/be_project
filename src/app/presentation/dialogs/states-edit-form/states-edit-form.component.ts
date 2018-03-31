@@ -46,14 +46,27 @@ export class StatesEditFormComponent implements OnInit {
 
   addState(): void {
     this.isWaiting = true;
+
     this.api.guid.getGuid().subscribe(uid => {
       this.isWaiting = false;
-      const newState: TaskStateModel = new TaskStateModel();
-      newState.color = 'black';
-      newState.name = 'State ' + this.states.elementsSequence.length;
-      newState.uid = <string>uid;
-      newState.columnCount = 2;
-      ContainerManager.AppendElement<TaskStateModel>(newState, this.states);
+      const state: TaskStateModel = new TaskStateModel();
+      state.color = 'black';
+      state.name = 'State ' + (this.states.elementsSequence.length + 1);
+      state.uid = <string>uid;
+      state.columnCount = 2;
+
+      const dialogRef = StateEditFormComponent.showDialog(
+        this.dialog, state, false);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (!result) {
+          return;
+        }
+        const newState = <TaskStateModel>result;
+        ContainerManager.AppendElement<TaskStateModel>(newState, this.states);
+      });
+
+
     });
   }
 
@@ -75,7 +88,6 @@ export class StatesEditFormComponent implements OnInit {
       ContainerManager.DeleteElement<TaskStateModel>(stateToEdit, this.states);
       ContainerManager.InsertElement<TaskStateModel>(newState, statePosition, this.states);
     });
-
   }
 
   deleteSelectedState() {

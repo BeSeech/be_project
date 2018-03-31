@@ -12,10 +12,15 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput id="stateColor" name="stateColor" #stateColor placeholder="Color"
-             [formControl]="stateColorControl" required>
-      <mat-hint align="end">characters {{stateColor.value?.length || 0}} of 100</mat-hint>
+      <mat-select id="stateColor" name="stateColor" #stateColor placeholder="Color"
+                  [formControl]="stateColorControl" required>
+        <mat-option *ngFor="let color of colors" [value]="color.value">
+          {{ color.viewValue }}
+        </mat-option>
+      </mat-select>
 
+
+      <mat-hint align="end">characters {{stateColor.value?.length || 0}} of 100</mat-hint>
       <mat-hint *ngIf="stateColorControl.hasError('required')" class="be error" align="start">The field is required</mat-hint>
       <mat-hint *ngIf="stateColorControl.hasError('maxlength')" class="be error" align="start">The field is too long</mat-hint>
     </mat-form-field>
